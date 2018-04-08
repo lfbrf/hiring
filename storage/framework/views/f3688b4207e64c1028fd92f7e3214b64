@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><?php echo e(env('APP_TITLE')); ?></title>
+	<link rel="stylesheet" href="<?php echo e(url('assets/css/hint.min.css')); ?>">
+	
+</head>
+<body>
+	<div id="sidebar">
+		<h3><?php echo e(env('APP_TITLE')); ?></h3>
+		<ul id="types">
+			<?php foreach($types as $type): ?>
+			<li>
+				<a href="/<?php echo e($type); ?>"><?php echo e(ucwords($type)); ?></a>
+			</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+
+	<div id="items-container">
+		<h1><?php echo e($title); ?></h1>
+		<ul id="items">
+			<?php foreach($items as $item): ?>
+			<li class="item">
+				<span class="item-score"><?php echo e($item->score); ?></span>
+				<a href="<?php echo e(URLHelper::getUrl($item->id, $item->url)); ?>">
+					<span class="item-title hint--bottom" data-hint="<?php echo e(str_limit(strip_tags($item->description), 160)); ?>"><?php echo e($item->title); ?></span>
+					<span class="item-info">posted <?php echo e(\Carbon\Carbon::createFromTimestamp($item->time_stamp)->diffForHumans()); ?> by <?php echo e($item->username); ?></span>
+				</a>
+
+			</li>
+			<?php endforeach; ?>
+
+
+		</ul>
+		<div class="pagi">
+				<?php echo $items->render(); ?>
+
+		</div>
+
+	</div>
+
+</body>
+</html>
